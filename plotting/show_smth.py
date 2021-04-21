@@ -1,6 +1,9 @@
 # Data science tools
 import numpy as np
 
+import torch
+from torch.utils.data import DataLoader, sampler, SubsetRandomSampler
+
 # Visualizations
 import matplotlib.pyplot as plt
 
@@ -80,3 +83,10 @@ def imshow(image):
     plt.imshow(image)
     plt.axis('off')
     plt.show()
+
+
+def main():
+    sample_loader = DataLoader(data['train'],  batch_size=9, sampler=train_sampler,)
+    data_iter = iter(sample_loader)
+    images, labels = data_iter.next()
+    plot_images(images, labels, data['train'].classes)

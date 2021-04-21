@@ -19,6 +19,9 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 from plotting import show_transforms
 from plotting import plot_images
 
+# TODO update get dataloaders from mixmatch or others. Try more simple function
+# TODO change ImageFolder to custom dataset
+
 def get_dataloaders(data_dir, valid_part, batch_size, image_transforms, show_transform=False, show_sample=False):
     '''
         Divide ImageFolder with train set into train and validation parts using random shuffling.

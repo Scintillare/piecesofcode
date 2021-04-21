@@ -56,8 +56,31 @@ def main():
         # torch.cuda.empty_cache()
         # start_epoch = state.epoch + 1
         # epoch = start_epoch
+
+        # *_, self.start_epoch = last_netG.split('.')
+        # self.iteration = None
+        # self.start_epoch = int(self.start_epoch)+1
+        
         print('loaded %s' % load_file)
     else:
         # model = some_model_class()
         print("Start from scratch")
     # model = model.cuda()
+
+
+    # save generator
+        if epoch%1==0:
+            netG_file_name = self.netG_file_name + '.' + str(epoch) 
+            torch.save(self.netG.state_dict(), netG_file_name)
+            netD_file_name = self.netDisc_file_name + '.' + str(epoch) 
+            torch.save(self.netDisc.state_dict(), netD_file_name)
+            optG_file_name = self.optG_file_name + '.' + str(epoch) 
+            torch.save(self.optimizer_G.state_dict(), optG_file_name)
+            optD_file_name = self.optD_file_name + '.' + str(epoch) 
+            torch.save(self.optimizer_D.state_dict(), optD_file_name)
+        
+    #save final model
+    torch.save(self.netG.state_dict(), self.netG_file_name )
+    torch.save(self.netDisc.state_dict(), self.netDisc_file_name)
+    torch.save(self.optimizer_G.state_dict(), self.optG_file_name)
+    torch.save(self.optimizer_D.state_dict(), self.optD_file_name)
