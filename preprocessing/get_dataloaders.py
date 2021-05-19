@@ -22,6 +22,32 @@ from plotting import plot_images
 # TODO update get dataloaders from mixmatch or others. Try more simple function
 # TODO change ImageFolder to custom dataset
 
+
+train_data = datasets.ImageFolder(DATA_DIR_TRAIN, data_transforms['train'])
+train_loader = DataLoader(train_data,  batch_size=8, shuffle=False)
+
+x_train, y_train = [], []
+for (data, target) in train_loader:
+    x_train.append(data)
+    y_train.append(target)
+x_train, y_train = torch.cat(x_train), torch.cat(y_train)
+
+n_labeled = 8000
+randperm = np.random.permutation(len(x_train))
+labeled_idx = randperm[:n_labeled]
+validation_idx = randperm[n_labeled:]
+
+x_labeled = x_train[labeled_idx]
+x_validation = x_train[validation_idx]
+y_labeled = y_train[labeled_idx]
+y_validation = y_train[validation_idx]
+
+del train_loader
+del train_data
+
+test_data = datasets.ImageFolder(DATA_DIR_TEST, data_transforms['val'])
+unl_data = datasets.ImageFolder(DATA_DIR_UNL, data_transforms['val'])
+
 def get_dataloaders(data_dir, valid_part, batch_size, image_transforms, show_transform=False, show_sample=False):
     '''
         Divide ImageFolder with train set into train and validation parts using random shuffling.

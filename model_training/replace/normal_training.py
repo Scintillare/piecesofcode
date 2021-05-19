@@ -2,7 +2,7 @@ import time
 import torch
 import numpy
 import random
-from from_common import *
+from train_utils import *
 from tqdm import tqdm
 import gc
 
@@ -73,7 +73,7 @@ class NormalTraining():
         self.writer.add_text('config/model', self.model.__class__.__name__)
         self.writer.add_text('config/model_details', str(self.model))
         self.writer.add_text('config/optimizer', self.optimizer.__class__.__name__)
-        self.writer.add_text('config/scheduler', self.scheduler.__class__.__name__)
+        # self.writer.add_text('config/scheduler', self.scheduler.__class__.__name__)
         self.writer.add_text('config/cuda', str(self.cuda))
 
         seed = int(time.time()) # time() is float
@@ -123,7 +123,7 @@ class NormalTraining():
 
             loss.backward()
             self.optimizer.step()
-            self.scheduler.step()
+            # self.scheduler.step()
 
             
             if b == batches - 1:
